@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="site.css" type="text/css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bethany's Pie Shop | Pies</title>
+
+    <style>
+    </style>
+</head>
+
+<body>
+  <header>
+      <nav>
+          <ul>
+              <li><a href = "/">Home</a></li>
+              <li><a href = "pies.html">Pies</a></li>
+              <li><a href = "contact.html">Contact</a></li>
+          </ul>
+      </nav>
+  </header>
+
+  <main>
+    <aside><img src="images/logo.png" alt="Bethany's Pie Shop"></aside>
+      <article>
+        <section class="columns-desktop">
+
+          <div class="pie">
+            <img src="images/apple-pie.png" alt="apple-pie" />
+            <div class="columns">
+              <div class="title">Apple Pie</div>
+              <div class="price">$12.95</div>
+            </div>
+            <p class="desc">Our famous apple pie</p>
+            <button data-order="apple-pie">Order</button> <!-- data-... attribute to add in custom information -->
+          </div>
+
+          <div class="pie">
+            <img src="images/cherry-pie.png" alt="cherry-pie" />
+            <div class="columns">
+              <div class="title">Cherry Pie</div>
+              <div class="price">$15.95</div>
+            </div>
+            <p class="desc">A summer classic!</p>
+            <button data-order="cherry-pie">Order</button>
+          </div>
+
+        </section>    
+      </article>
+  </main>
+
+  <footer>
+    <nav>
+      <ul>
+        <li><a href = "/">Home</a></li>
+        <li><a href = "pies.html">Pies</a></li>
+        <li><a href = "contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </footer>
+
+  <script>
+              // Tutorial starts here: 
+              // https://app.pluralsight.com/course-player?clipId=6694ab16-c15d-4f7c-a099-4a86bafd8de9
+    window.addEventListener("DOMContentLoaded", function(event) { /* EventListener for DOM HTML(!) content fully loaded. "load" event can be used to fire when whole(!) page is loaded. */
+              // access ALL buttons wiht data- attribute
+              // querySelectorAll = a Document method, returns static NodeList (= a collection of DOM Nodes.)
+              // A Node is an abstract base class upon which many DOM API objects are based, like Document, Element, DocumentFragment 
+      const orderButtons = document.querySelectorAll("button[data-order]");
+
+              // itterate over NodeList elements
+              // anonymus function will access individual buttons in orderButtons
+      orderButtons.forEach(function(button) {
+
+        button.addEventListener("click", function(event) { /* = sets up a function that will be called whenever the specified event is delivered to the target.  */
+          const button = event.currentTarget;
+              // ask for parent information
+          const container = button.parentNode;
+
+          const order = {
+            id: button.getAttribute("data-order"),
+            title: container.querySelector(".title").innerText,
+            price: container.querySelector(".price").innerText,
+            desc: container.querySelector(".desc").innerText
+          };
+
+                // LOCALSTORAGE API: 
+                // localStorage object is used to save and retrieve data with a set of methods
+          localStorage.setItem("order", JSON.stringify(order)); /* "order" pulls data from special data-attribute, data needs to be in string format. JSON helper object to interact w/ json-s */
+          const url = window.location.href.replace("pies.html", "order.html"); /* replace infromation in URL */
+          window.location.href = url; /* redirect to new URL */
+        });
+
+      });
+    });
+  </script>
+</body>
+</html>
