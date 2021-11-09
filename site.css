@@ -42,6 +42,14 @@ nav > ul > li{
     margin: 0 5px 0 5px;
 }
 
+section {
+  display:none;
+  margin-top: 40px;
+  width: 100%;
+  background-color: #fff;
+  padding: 15px;
+}
+
 main {
     display: block;
     background-image: url("images/background.png");
@@ -85,6 +93,14 @@ article {
     }
 }
 
+button {
+  background-color: #f6aeae;
+  padding: 10px;
+  border: solid 1px #f6aeae;
+  border-radius: 3px;
+  color:#fff;
+}
+
 /* Pies */
 
 .pie {
@@ -108,7 +124,7 @@ article {
 }
 
 .pie .price {
- text-align: right;
+  text-align: right;
 }
 
 .pie .columns div{

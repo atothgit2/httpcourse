@@ -8,6 +8,12 @@
   <title>Bethany's Pie Shop</title>
 
   <style>
+    .thankyou {
+      background-color: #fff;
+      font-size: 1.5em;
+      padding: 10px;
+    }
+
     h1 {
       font-size: 3em;
       margin-top: .5em;
@@ -21,6 +27,16 @@
       background-color: #fff;
       font-size: 1.5em;
       padding: 10px;
+    }
+
+    main > div {
+      vertical-align: center
+      ;
+    }
+
+    section > div{
+      text-align: center;
+      /* background-color: antiquewhite; */
     }
   </style>
 </head>
@@ -36,10 +52,14 @@
     </nav>
   </header>
 
-  <main>
-    <div class="sub-title">
-      Thank you for your order!
+  <section id = "section">
+    <div>
+      <h3 id = "h3">Thank you for your order, <span id="name"></span>!</h3>
+      <p id = "orderline">Your order will be delivered sortly!</p>
     </div>
+  </section>
+
+  <main>
 
     <aside><img src="images/logo.png" alt="Bethany's Pie Shop"></aside>
     <article>
@@ -66,6 +86,16 @@
   </footer>
 
   <script>
+    const order = localStorage.getItem("allOrderData");
+
+    if(order) {
+      document.getElementById("section").style.display = "grid";
+      document.getElementById("name").innerText = JSON.stringify(JSON.parse(order).firstName);
+      console.log("has order;")
+      console.log(order);
+    } else {
+      console.log("no log");
+    }
   </script>
 
   </body>

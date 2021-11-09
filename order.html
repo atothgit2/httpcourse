@@ -67,32 +67,32 @@
         <p class="desc"></p>
       </div>
 
-      <form action="http://localhost:7071/api/post" method="post">
+      <form class="form" id="form">
         <input type="hidden" id="pie-order" name="pie-order">
         <input type="hidden" id="location" name="location">
 
         <div class="input-group">
           <div><label for="first-name">First name</label></div>
-          <div><input type="text" name= "first-name" id="first-name"></div>
+          <div><input type="text" name= "first-name" id="first-name" value="Arpad"</div>
         </div>
 
         <div class="input-group">
           <div><label for="last-name">Last name</label></div>
-          <div><input type="text" name= "last-name" id="last-name"></div>
+          <div><input type="text" name= "last-name" id="last-name" value="Toth"></div>
         </div>
 
         <div class="input-group">
           <div><label for="address">Address</label></div>
-          <div><input type="text" name= "address" id="address"></div>
+          <div><input type="text" name= "address" id="address" value="test address 1122"></div>
         </div>
 
         <div class="input-group">
           <div><label for="state">State</label></div>
           <div>
             <select name="state" id="state">
-              <option value="" selected>[ Select one ]</option>
+              <!-- <option  value="">[ Select one ]</option> -->
               <option value="Alabama">Alabama</option>
-              <option value="Alaska">Alaska</option>
+              <option value="Alaska" selected>Alaska</option>
               <option value="Arizona">Arizona</option>
             </select>
           </div>
@@ -101,12 +101,12 @@
         <div class="input-group">
           <div><label for="comments">Comments</label></div>
           <div>
-            <textarea name="comments" id="comments" cols="50" rows="10"></textarea>
+            <textarea name="comments" id="comments" cols="50" rows="10">test comment</textarea>
           </div>
         </div>
 
         <input type="reset" value="Reset" />
-        <input type="submit" value="Order" />
+        <button  class="submit" type="submit" id ="submit">Submit</button>
       </form>
     </article>
   </main>
@@ -121,15 +121,13 @@
     </nav>
   </footer>
 
-
   </body>
-  
   <script>
     window.addEventListener("DOMContentLoaded", function(e) {
         const order = localStorage.getItem("order");
 
         if(order) {
-
+          //  -----------------------------------------------------------------
           let locationBox = document.querySelector("#location");
 
           let location = {
@@ -148,34 +146,53 @@
             function(error) {
               locationBox.value = JSON.stringify(location);
             });
-
-          
-
+          //  -----------------------------------------------------------------
           // We need to turn the formerly stringified order info into an object
           const pieOrder = JSON.parse(order);
-
+          
           const orderInput = document.querySelector("#pie-order");
           orderInput.value = order;
-
-          const pie = document.querySelector(".pie"); // Get reference to pie container
+          
+          // Get reference to pie container
+          const pie = document.querySelector(".pie"); 
 
           // Looking for elements in pie container
           const title = pie.querySelector(".title"); 
           const price = pie.querySelector(".price"); 
           const desc = pie.querySelector(".desc");
-
+          const img = pie.querySelector("img");
+          // https://app.pluralsight.com/course-player?clipId=909e7593-1eed-4a76-9664-8ee7eff0b0f5
           title.innerText = pieOrder.title;
           price.innerText = pieOrder.price;
           desc.innerText = pieOrder.desc;
 
-          console.log("..................");
-          console.log(pieOrder.id); 
-          const img = pie.querySelector("img");
-          // https://app.pluralsight.com/course-player?clipId=909e7593-1eed-4a76-9664-8ee7eff0b0f5
           img.setAttribute("src", "images/" + pieOrder.id + ".png");
           img.setAttribute("alt", pieOrder.title);
-        }
-    });
-  </script>
+          
+          //  -----------------------------------------------------------------
+          const submitButton = document.querySelector("#submit").addEventListener("click", function(event) {
+          
 
+          const fullOrder = {
+            id: JSON.parse(localStorage.getItem("order")).id,
+            title: JSON.parse(localStorage.getItem("order")).title,
+            price: JSON.parse(localStorage.getItem("order")).price,
+            desc: JSON.parse(localStorage.getItem("order")).desc,
+
+            firstName: document.getElementById("first-name").value,
+            lastName: document.getElementById("last-name").value,
+            address: document.getElementById("address").value,
+            state: document.getElementById("state").value,
+            comment: document.getElementById("comments").value
+          };
+
+          console.log(fullOrder);
+
+          localStorage.setItem("allOrderData", JSON.stringify(fullOrder));
+          event.preventDefault();
+          window.location = "/index.html";
+          });
+        }
+    });  
+  </script>
 </html>
